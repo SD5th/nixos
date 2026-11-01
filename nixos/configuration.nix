@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   # BootLoader: UEFI
@@ -73,7 +73,11 @@
     pciutils
     usbutils
     htop
-  ];
+    (import inputs.nixpkgs-master {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+    }).code-cursor
+];
 
   # temp
   programs.firefox.enable = true;
