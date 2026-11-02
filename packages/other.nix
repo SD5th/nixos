@@ -8,5 +8,6 @@
     firefox
     telegram-desktop
     spotify
+    kdePackages.ktorrent
   ];
 }
