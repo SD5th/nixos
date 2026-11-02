@@ -3,36 +3,6 @@ let
 
   # plasma-manager пишет настройки в ~/.config.
   # Сам рабочий стол включается в system/desktop.nix.
-  # Выбор эмодзи встроен в plasma-desktop, отдельного пакета нет.
-  wallpaper = "file:///home/sd5th/Pictures/Wallpaper/Jellyfish.jpg";
-  screen = "9fb6846b-e670-4116-a3b2-100cf7651c25";
-
-  thirds = {
-    layoutDirection = "horizontal";
-    tiles = [
-      { width = 0.25; }
-      { width = 0.5; }
-      { width = 0.25; }
-    ];
-  };
-  work = {
-    layoutDirection = "horizontal";
-    tiles = [
-      {
-        layoutDirection = "vertical";
-        width = 0.4;
-        tiles = [
-          { height = 0.5; }
-          { height = 0.5; }
-        ];
-      }
-      { width = 0.6; }
-    ];
-  };
-  tiling = tiles: {
-    padding = 4;
-    tiles = builtins.toJSON tiles;
-  };
 in
 {
   imports = [
@@ -59,14 +29,7 @@ in
     };
 
     kwin = {
-      virtualDesktops = {
-        rows = 1;
-        names = [
-          "Work"
-          "Info"
-          "Social"
-        ];
-      };
+      virtualDesktops.rows = 1;
       edgeBarrier = 50;
       cornerBarrier = false;
       effects = {
@@ -88,20 +51,10 @@ in
           displayName = "";
         }
       ];
-      touchpads = [
-        {
-          name = "AlpsPS/2 ALPS DualPoint TouchPad";
-          vendorId = "2";
-          productId = "8";
-          naturalScroll = true;
-          rightClickMethod = "twoFingers";
-        }
-      ];
     };
 
     powerdevil.AC = {
       dimDisplay.enable = false;
-      displayBrightness = 100;
       powerProfile = "performance";
       powerButtonAction = "turnOffScreen";
       whenLaptopLidClosed = "turnOffScreen";
@@ -158,18 +111,6 @@ in
         ];
       }
     ];
-
-    startup.desktopScript.wallpaper = {
-      priority = 3;
-      text = ''
-        let allDesktops = desktops();
-        for (const desktop of allDesktops) {
-            desktop.wallpaperPlugin = "org.kde.image";
-            desktop.currentConfigGroup = ["Wallpaper", "org.kde.image", "General"];
-            desktop.writeConfig("Image", "${wallpaper}");
-        }
-      '';
-    };
 
     shortcuts = {
       "KDE Keyboard Layout Switcher" = {
@@ -279,17 +220,6 @@ in
         Windows.ElectricBorderDelay = 125;
         Xwayland.Scale = 1.25;
         Plugins.windowapertureEnabled = false;
-        "Tiling/Desktop_1/${screen}" = tiling work;
-        "Tiling/Desktop_2/${screen}" = tiling thirds;
-        "Tiling/Desktop_3/${screen}" = tiling thirds;
-      };
-
-      kscreenlockerrc = {
-        Greeter.WallpaperPlugin = "org.kde.image";
-        "Greeter/Wallpaper/org.kde.image/General" = {
-          Image = wallpaper;
-          PreviewImage = wallpaper;
-        };
       };
 
       kdeglobals = {
