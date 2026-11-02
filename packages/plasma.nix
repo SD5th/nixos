@@ -20,7 +20,11 @@ in
     enable = true;
 
     workspace = {
-      lookAndFeel = "org.kde.breezedark.desktop";
+      colorScheme = "BreezeDark";
+      iconTheme = "breeze-dark";
+      theme = "default";
+      widgetStyle = "Breeze";
+      cursor.theme = "breeze_cursors";
       splashScreen.theme = "None";
       windowDecorations = {
         library = "org.kde.kwin.aurorae";
