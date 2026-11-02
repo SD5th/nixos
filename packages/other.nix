@@ -6,5 +6,7 @@
     curl
     htop
     firefox
+    telegram-desktop
+    spotify
   ];
 }
