@@ -1,4 +1,8 @@
 # Whitelist .gitignore
 *
-!.gitignore
 !*/
+!.gitignore
+
+# Nix
+!*.nix
+!flake.lock
