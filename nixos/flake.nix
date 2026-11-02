@@ -3,13 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
-    flclashx.url = "github:devmoded/flclashx-flake";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations.mentomori = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
@@ -19,9 +19,22 @@
 
       modules = [
         ./hardware-configuration.nix
-        ./configuration.nix
+        ./system-configuration.nix
+        ({ inputs, ... }: {
+          imports = [
+            inputs.home-manager.nixosModules.home-manager
+          ];
 
-        ./modules/flclashx.nix
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = {
+              inherit inputs;
+            };
+            backupFileExtension = "backup";
+            users.sd5th = import ./packages-configuration.nix;
+          };
+        })
       ];
     };
   };
