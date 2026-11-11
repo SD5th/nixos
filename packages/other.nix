@@ -5,6 +5,7 @@
     wget
     curl
     htop
+    sshfs
     firefox
     telegram-desktop
     spotify
