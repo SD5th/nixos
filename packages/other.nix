@@ -9,7 +9,6 @@
     firefox
     telegram-desktop
     spotify
-    obsidian
     kdePackages.ktorrent
   ];
 }
